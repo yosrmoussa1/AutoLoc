@@ -1,6 +1,10 @@
 package tn.esprit.autoloc.domain;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "agence")
 @Getter
@@ -20,6 +24,9 @@ public class Agence {
     private String adresse;
     @Column(nullable = false, length = 10)
     private String telephone;
-
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
+    private List<Vehicule> vehicules = new ArrayList<>();
+    @OneToMany(mappedBy = "agence",fetch = FetchType.LAZY)
+    private List<Employe> employees = new ArrayList<>();
 }
 
