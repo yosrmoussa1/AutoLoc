@@ -16,7 +16,7 @@ import java.util.List;
 public class Contrat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idContrat;
+    private Long idContrat;
     @Column( nullable = false)
     private LocalDate dateSignature;
     @Column(nullable = false, precision = 10, scale = 2)
