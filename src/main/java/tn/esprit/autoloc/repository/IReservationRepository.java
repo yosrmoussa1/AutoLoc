@@ -1,18 +1,8 @@
 package tn.esprit.autoloc.repository;
 
-import java.util.List;
-import java.util.Optional;
 import tn.esprit.autoloc.domain.Reservation;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IReservationRepository {
-
-    Reservation save(Reservation entite);
-
-    Optional<Reservation> findById(Long id);
-
-    List<Reservation> findAll();
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+public interface IReservationRepository
+        extends JpaRepository<Reservation, Long> {
 }

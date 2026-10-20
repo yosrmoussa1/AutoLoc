@@ -39,8 +39,7 @@ public class MaintenanceServiceImpl implements IMaintenanceService {
     public Maintenance update(Long id, Maintenance entite) {
         Maintenance existant = findById(id);
         valider(entite);
-        // Les associations (liens vers d'autres entités) ne sont pas recopiées ici :
-        // leur gestion est l'objet du Chapitre 9.
+
         existant.setDateDebut(entite.getDateDebut());
         existant.setDateFin(entite.getDateFin());
         existant.setDescription(entite.getDescription());

@@ -38,8 +38,6 @@ public class ReservationServiceImpl implements IReservationService {
     public Reservation update(Long id, Reservation entite) {
         Reservation existant = findById(id);
         valider(entite);
-        // Les associations (liens vers d'autres entités) ne sont pas recopiées ici :
-        // leur gestion est l'objet du Chapitre 9.
         existant.setDateDebut(entite.getDateDebut());
         existant.setDateFin(entite.getDateFin());
         existant.setStatut(entite.getStatut());

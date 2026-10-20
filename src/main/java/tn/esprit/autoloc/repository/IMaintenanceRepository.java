@@ -1,18 +1,8 @@
 package tn.esprit.autoloc.repository;
 
-import java.util.List;
-import java.util.Optional;
 import tn.esprit.autoloc.domain.Maintenance;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IMaintenanceRepository {
-
-    Maintenance save(Maintenance entite);
-
-    Optional<Maintenance> findById(Long id);
-
-    List<Maintenance> findAll();
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+public interface IMaintenanceRepository
+        extends JpaRepository<Maintenance, Long> {
 }

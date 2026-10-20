@@ -1,18 +1,8 @@
 package tn.esprit.autoloc.repository;
 
-import java.util.List;
-import java.util.Optional;
 import tn.esprit.autoloc.domain.Paiement;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IPaiementRepository {
-
-    Paiement save(Paiement entite);
-
-    Optional<Paiement> findById(Long id);
-
-    List<Paiement> findAll();
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+public interface IPaiementRepository
+        extends JpaRepository<Paiement, Long> {
 }

@@ -1,18 +1,8 @@
 package tn.esprit.autoloc.repository;
 
-import java.util.List;
-import java.util.Optional;
 import tn.esprit.autoloc.domain.Vehicule;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IVehiculeRepository {
-
-    Vehicule save(Vehicule entite);
-
-    Optional<Vehicule> findById(Long id);
-
-    List<Vehicule> findAll();
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+public interface IVehiculeRepository
+        extends JpaRepository<Vehicule, Long> {
 }

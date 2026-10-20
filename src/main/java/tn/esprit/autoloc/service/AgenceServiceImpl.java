@@ -38,8 +38,7 @@ public class AgenceServiceImpl implements IAgenceService {
     public Agence update(Long id, Agence entite) {
         Agence existant = findById(id);
         valider(entite);
-        // Les associations (liens vers d'autres entités) ne sont pas recopiées ici :
-        // leur gestion est l'objet du Chapitre 9.
+
         existant.setNom(entite.getNom());
         existant.setVille(entite.getVille());
         existant.setAdresse(entite.getAdresse());

@@ -1,18 +1,8 @@
 package tn.esprit.autoloc.repository;
 
-import java.util.List;
-import java.util.Optional;
 import tn.esprit.autoloc.domain.Employe;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IEmployeRepository {
-
-    Employe save(Employe entite);
-
-    Optional<Employe> findById(Long id);
-
-    List<Employe> findAll();
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+public interface IEmployeRepository
+        extends JpaRepository<Employe, Long> {
 }
