@@ -1,14 +1,17 @@
 
-package tn.esprit.autoloc.controller;
+package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.RequiredArgsConstructor;
-import tn.esprit.autoloc.domain.Paiement;
+
 import tn.esprit.autoloc.service.IPaiementService;
+import tn.esprit.autoloc.web.dto.PaiementDTO;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +38,8 @@ public class PaiementRestController {
             responseCode = "200",
             description = "Liste des paiements récupérée avec succès"
     )
-    public ResponseEntity<List<Paiement>> afficherTous() {
+    public ResponseEntity<List<PaiementDTO>> afficherTous() {
+
         return ResponseEntity.ok(paiementService.findAll());
     }
 
@@ -49,7 +53,7 @@ public class PaiementRestController {
             @ApiResponse(responseCode = "200", description = "Paiement trouvé"),
             @ApiResponse(responseCode = "404", description = "Paiement introuvable")
     })
-    public ResponseEntity<Paiement> afficher(
+    public ResponseEntity<PaiementDTO> afficher(
             @Parameter(description = "Identifiant du paiement")
             @PathVariable Long id) {
 

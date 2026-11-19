@@ -1,11 +1,15 @@
-package tn.esprit.autoloc.controller;
+
+package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import tn.esprit.autoloc.domain.Agence;
+
+import jakarta.validation.Valid;
+
 import tn.esprit.autoloc.service.IAgenceService;
+import tn.esprit.autoloc.web.dto.AgenceDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,10 +41,10 @@ public class AgenceRestController {
             @ApiResponse(responseCode = "201", description = "Agence créée avec succès"),
             @ApiResponse(responseCode = "400", description = "Données invalides")
     })
-    public ResponseEntity<Agence> ajouterAgence(
-            @RequestBody Agence agence) {
+    public ResponseEntity<AgenceDTO> ajouterAgence(
+            @Valid @RequestBody AgenceDTO agenceDTO) {
 
-        Agence nouvelleAgence = agenceService.create(agence);
+        AgenceDTO nouvelleAgence = agenceService.create(agenceDTO);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -54,7 +58,8 @@ public class AgenceRestController {
             description = "Retourne la liste complète des agences enregistrées."
     )
     @ApiResponse(responseCode = "200", description = "Liste récupérée avec succès")
-    public ResponseEntity<List<Agence>> afficherAgences() {
+    public ResponseEntity<List<AgenceDTO>> afficherAgences() {
+
         return ResponseEntity.ok(agenceService.findAll());
     }
 
@@ -68,7 +73,7 @@ public class AgenceRestController {
             @ApiResponse(responseCode = "200", description = "Agence trouvée"),
             @ApiResponse(responseCode = "404", description = "Agence introuvable")
     })
-    public ResponseEntity<Agence> afficherAgence(
+    public ResponseEntity<AgenceDTO> afficherAgence(
             @PathVariable Long id) {
 
         return ResponseEntity.ok(agenceService.findById(id));
@@ -84,12 +89,11 @@ public class AgenceRestController {
             @ApiResponse(responseCode = "200", description = "Agence modifiée avec succès"),
             @ApiResponse(responseCode = "404", description = "Agence introuvable")
     })
-    public ResponseEntity<Agence> modifierAgence(
+    public ResponseEntity<AgenceDTO> modifierAgence(
             @PathVariable Long id,
-            @RequestBody Agence agence) {
+            @Valid @RequestBody AgenceDTO agenceDTO) {
 
-        Agence agenceModifiee =
-                agenceService.update(id, agence);
+        AgenceDTO agenceModifiee = agenceService.update(id, agenceDTO);
 
         return ResponseEntity.ok(agenceModifiee);
     }

@@ -1,14 +1,18 @@
 
-package tn.esprit.autoloc.controller;
+package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import tn.esprit.autoloc.domain.Equipement;
+
 import tn.esprit.autoloc.service.IEquipementService;
+import tn.esprit.autoloc.web.dto.EquipementDTO;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,63 +22,84 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/equipements")
 @RequiredArgsConstructor
-@Tag(name = "Équipements", description = "Gestion des équipements AutoLoc (créer, consulter, modifier et supprimer des équipements)")
+@Tag(
+        name = "Équipements",
+        description = "Gestion des équipements AutoLoc (créer, consulter, modifier et supprimer des équipements)"
+)
 public class EquipementRestController {
 
     private final IEquipementService equipementService;
 
+    // Ajouter un équipement
     @PostMapping
     @Operation(summary = "Créer un équipement")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Équipement créé"),
-            @ApiResponse(responseCode = "400", description = "Libellé ou quantité invalide")
+            @ApiResponse(responseCode = "400", description = "Données invalides")
     })
-    public ResponseEntity<Equipement> ajouter(
-            @RequestBody Equipement equipement) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(equipementService.create(equipement));
+    public ResponseEntity<EquipementDTO> ajouter(
+            @Valid @RequestBody EquipementDTO equipementDTO) {
+
+        EquipementDTO nouvelEquipement = equipementService.create(equipementDTO);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(nouvelEquipement);
     }
 
+    // Afficher tous les équipements
     @GetMapping
     @Operation(summary = "Lister les équipements")
     @ApiResponse(responseCode = "200", description = "Liste des équipements")
-    public ResponseEntity<List<Equipement>> afficherTous() {
+    public ResponseEntity<List<EquipementDTO>> afficherTous() {
+
         return ResponseEntity.ok(equipementService.findAll());
     }
 
+    // Afficher un équipement par ID
     @GetMapping("/{id}")
     @Operation(summary = "Consulter un équipement")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Équipement trouvé"),
             @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     })
-    public ResponseEntity<Equipement> afficher(
+    public ResponseEntity<EquipementDTO> afficher(
             @Parameter(description = "Identifiant de l'équipement")
             @PathVariable Long id) {
+
         return ResponseEntity.ok(equipementService.findById(id));
     }
 
+    // Modifier un équipement
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un équipement")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Équipement modifié"),
-            @ApiResponse(responseCode = "400", description = "Libellé ou quantité invalide"),
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
             @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     })
-    public ResponseEntity<Equipement> modifier(
+    public ResponseEntity<EquipementDTO> modifier(
             @PathVariable Long id,
-            @RequestBody Equipement equipement) {
-        return ResponseEntity.ok(equipementService.update(id, equipement));
+            @Valid @RequestBody EquipementDTO equipementDTO) {
+
+        EquipementDTO equipementModifie =
+                equipementService.update(id, equipementDTO);
+
+        return ResponseEntity.ok(equipementModifie);
     }
 
+    // Supprimer un équipement
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer un équipement")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Équipement supprimé"),
             @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     })
-    public ResponseEntity<Void> supprimer(@PathVariable Long id) {
+    public ResponseEntity<Void> supprimer(
+            @PathVariable Long id) {
+
         equipementService.deleteById(id);
+
         return ResponseEntity.noContent().build();
     }
 }

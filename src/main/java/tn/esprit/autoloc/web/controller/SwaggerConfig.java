@@ -1,4 +1,4 @@
- package tn.esprit.autoloc.controller;
+ package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -24,7 +24,7 @@ public class SwaggerConfig {
     public GroupedOpenApi agenceApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion d'Agences")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/agences/**")
                 .build();
     }
@@ -34,7 +34,7 @@ public class SwaggerConfig {
     public GroupedOpenApi employeApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Employés")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/employes/**")
                 .build();
     }
@@ -44,7 +44,7 @@ public class SwaggerConfig {
     public GroupedOpenApi vehiculeApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Véhicules")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/vehicules/**")
                 .build();
     }
@@ -54,7 +54,7 @@ public class SwaggerConfig {
     public GroupedOpenApi equipementApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Équipements")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/equipements/**")
                 .build();
     }
@@ -64,7 +64,7 @@ public class SwaggerConfig {
     public GroupedOpenApi clientApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Clients")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/clients/**")
                 .build();
     }
@@ -74,7 +74,7 @@ public class SwaggerConfig {
     public GroupedOpenApi reservationApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Réservations")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/reservations/**")
                 .build();
     }
@@ -84,7 +84,7 @@ public class SwaggerConfig {
     public GroupedOpenApi contratApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Contrats")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/contrats/**")
                 .build();
     }
@@ -94,7 +94,7 @@ public class SwaggerConfig {
     public GroupedOpenApi paiementApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Paiements")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/paiements/**")
                 .build();
     }
@@ -104,7 +104,7 @@ public class SwaggerConfig {
     public GroupedOpenApi maintenanceApi() {
         return GroupedOpenApi.builder()
                 .group("Gestion des Maintenances")
-                .packagesToScan("tn.esprit.autoloc.controller")
+                .packagesToScan("tn.esprit.autoloc.web.controller")
                 .pathsToMatch("/api/maintenances/**")
                 .build();
     }

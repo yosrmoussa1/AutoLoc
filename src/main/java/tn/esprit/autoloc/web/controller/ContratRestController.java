@@ -1,14 +1,18 @@
 
-package tn.esprit.autoloc.controller;
+package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import tn.esprit.autoloc.domain.Contrat;
+
 import tn.esprit.autoloc.service.IContratService;
+import tn.esprit.autoloc.web.dto.ContratDTO;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +38,15 @@ public class ContratRestController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Contrat créé avec succès"),
-            @ApiResponse(responseCode = "400", description = "Montant total invalide")
+            @ApiResponse(responseCode = "400", description = "Données invalides")
     })
-    public ResponseEntity<Contrat> ajouter(
-            @RequestBody Contrat contrat) {
+    public ResponseEntity<ContratDTO> ajouter(
+            @Valid @RequestBody ContratDTO contratDTO) {
 
-        Contrat nouveauContrat = contratService.create(contrat);
+        ContratDTO nouveauContrat = contratService.create(contratDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
                 .body(nouveauContrat);
     }
 
@@ -52,7 +57,8 @@ public class ContratRestController {
             description = "Retourne tous les contrats enregistrés."
     )
     @ApiResponse(responseCode = "200", description = "Liste des contrats récupérée")
-    public ResponseEntity<List<Contrat>> afficherTous() {
+    public ResponseEntity<List<ContratDTO>> afficherTous() {
+
         return ResponseEntity.ok(contratService.findAll());
     }
 
@@ -66,7 +72,7 @@ public class ContratRestController {
             @ApiResponse(responseCode = "200", description = "Contrat trouvé"),
             @ApiResponse(responseCode = "404", description = "Contrat introuvable")
     })
-    public ResponseEntity<Contrat> afficher(
+    public ResponseEntity<ContratDTO> afficher(
             @Parameter(description = "Identifiant du contrat")
             @PathVariable Long id) {
 
@@ -81,14 +87,14 @@ public class ContratRestController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Contrat modifié avec succès"),
-            @ApiResponse(responseCode = "400", description = "Montant total invalide"),
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
             @ApiResponse(responseCode = "404", description = "Contrat introuvable")
     })
-    public ResponseEntity<Contrat> modifier(
+    public ResponseEntity<ContratDTO> modifier(
             @PathVariable Long id,
-            @RequestBody Contrat contrat) {
+            @Valid @RequestBody ContratDTO contratDTO) {
 
-        Contrat contratModifie = contratService.update(id, contrat);
+        ContratDTO contratModifie = contratService.update(id, contratDTO);
 
         return ResponseEntity.ok(contratModifie);
     }
