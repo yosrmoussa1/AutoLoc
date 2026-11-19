@@ -15,7 +15,6 @@ public class MaintenanceDTO {
     private java.time.LocalDate dateDebut;
     @NotNull(message = "La date de fin est obligatoire")
     private java.time.LocalDate dateFin;
-    @AssertTrue(message = "La date de fin ne peut pas être antérieure à la date de début")
     @NotNull(message = "La description est obligatoire")
     private String description;
     private Long idVehicule;
