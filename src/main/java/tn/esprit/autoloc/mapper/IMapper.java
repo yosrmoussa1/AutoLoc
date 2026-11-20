@@ -60,7 +60,6 @@ public interface IMapper {
     Reservation toEntity(ReservationDTO reservationDTO);
 
     @Mapping(target = "idAgence", source = "agence.idAgence")
-    @Mapping(target = "idEquipements", ignore = true)
     VehiculeDTO toDto(Vehicule vehicule);
 
     @Mapping(target = "agence", ignore = true)

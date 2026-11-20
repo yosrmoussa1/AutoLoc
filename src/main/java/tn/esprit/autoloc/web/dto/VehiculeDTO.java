@@ -44,5 +44,5 @@ public class VehiculeDTO {
     @Positive(message = "L'identifiant de l'agence doit être positif")
     private Long idAgence;
 
-    private Set<@NotNull @Positive Long> idEquipements;
+    private Set<EquipementDTO> equipements;
 }
