@@ -20,7 +20,7 @@ public class MaintenanceServiceImpl implements IMaintenanceService {
     private final IMaintenanceRepository maintenanceRepository;
     private final IVehiculeRepository vehiculeRepository;
     private final IMapper maintenanceMapper;
-
+    private static final String ENTITY_NAME = "Maintenance";
     @Override
     public MaintenanceDTO create(MaintenanceDTO dto) {
 
@@ -43,7 +43,7 @@ public class MaintenanceServiceImpl implements IMaintenanceService {
 
         Maintenance maintenance = maintenanceRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Maintenance", id));
+                        new ResourceNotFoundException(ENTITY_NAME, id));
 
         return maintenanceMapper.toDto(maintenance);
     }
@@ -62,7 +62,7 @@ public class MaintenanceServiceImpl implements IMaintenanceService {
 
         Maintenance existant = maintenanceRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Maintenance", id));
+                        new ResourceNotFoundException(ENTITY_NAME, id));
 
         existant.setDateDebut(dto.getDateDebut());
         existant.setDateFin(dto.getDateFin());
@@ -79,7 +79,7 @@ public class MaintenanceServiceImpl implements IMaintenanceService {
 
         Maintenance maintenance = maintenanceRepository.findById(idMaintenance)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Maintenance", idMaintenance));
+                        new ResourceNotFoundException(ENTITY_NAME, idMaintenance));
 
         Vehicule vehicule = vehiculeRepository.findById(idVehicule)
                 .orElseThrow(() ->
@@ -96,9 +96,15 @@ public class MaintenanceServiceImpl implements IMaintenanceService {
     public void deleteById(Long id) {
 
         if (!maintenanceRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Maintenance", id);
+            throw new ResourceNotFoundException(ENTITY_NAME, id);
         }
 
         maintenanceRepository.deleteById(id);
+    }
+    //afficher la liste des maintenances à partir de l'idVehicule
+    @Override
+    public List<MaintenanceDTO> findByIdVehicule(Long id) {
+
+        return maintenanceRepository.findByVehiculeIdVehicule(id).stream().map(maintenanceMapper::toDto).toList();
     }
 }

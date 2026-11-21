@@ -1,13 +1,9 @@
-
 package tn.esprit.autoloc.web.controller;
 
-import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import jakarta.validation.Valid;
-
 import tn.esprit.autoloc.service.IAgenceService;
 import tn.esprit.autoloc.web.dto.AgenceDTO;
 
@@ -37,18 +33,14 @@ public class AgenceRestController {
             summary = "Ajouter une agence",
             description = "Crée une nouvelle agence à partir des données envoyées en JSON."
     )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Agence créée avec succès"),
-            @ApiResponse(responseCode = "400", description = "Données invalides")
-    })
+    @ApiResponse(responseCode = "201", description = "Agence créée avec succès")
+    @ApiResponse(responseCode = "400", description = "Données invalides")
     public ResponseEntity<AgenceDTO> ajouterAgence(
             @Valid @RequestBody AgenceDTO agenceDTO) {
 
-        AgenceDTO nouvelleAgence = agenceService.create(agenceDTO);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(nouvelleAgence);
+                .body(agenceService.create(agenceDTO));
     }
 
     // Afficher toutes les agences
@@ -69,10 +61,8 @@ public class AgenceRestController {
             summary = "Afficher une agence",
             description = "Recherche et retourne une agence à partir de son identifiant."
     )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Agence trouvée"),
-            @ApiResponse(responseCode = "404", description = "Agence introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Agence trouvée")
+    @ApiResponse(responseCode = "404", description = "Agence introuvable")
     public ResponseEntity<AgenceDTO> afficherAgence(
             @PathVariable Long id) {
 
@@ -85,10 +75,8 @@ public class AgenceRestController {
             summary = "Modifier une agence",
             description = "Met à jour les informations de l'agence correspondant à l'identifiant fourni."
     )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Agence modifiée avec succès"),
-            @ApiResponse(responseCode = "404", description = "Agence introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Agence modifiée avec succès")
+    @ApiResponse(responseCode = "404", description = "Agence introuvable")
     public ResponseEntity<AgenceDTO> modifierAgence(
             @PathVariable Long id,
             @Valid @RequestBody AgenceDTO agenceDTO) {
@@ -104,10 +92,8 @@ public class AgenceRestController {
             summary = "Supprimer une agence",
             description = "Supprime l'agence correspondant à l'identifiant fourni."
     )
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Agence supprimée avec succès"),
-            @ApiResponse(responseCode = "404", description = "Agence introuvable")
-    })
+    @ApiResponse(responseCode = "204", description = "Agence supprimée avec succès")
+    @ApiResponse(responseCode = "404", description = "Agence introuvable")
     public ResponseEntity<Void> supprimerAgence(
             @PathVariable Long id) {
 

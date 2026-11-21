@@ -33,10 +33,10 @@ public class VehiculeRestController {
     // Créer un véhicule
     @PostMapping
     @Operation(summary = "Créer un véhicule")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Véhicule créé"),
+
+            @ApiResponse(responseCode = "201", description = "Véhicule créé")
             @ApiResponse(responseCode = "400", description = "Valeur numérique invalide")
-    })
+
     public ResponseEntity<VehiculeDTO> ajouter(
             @Valid @RequestBody VehiculeDTO vehiculeDTO) {
 
@@ -59,10 +59,9 @@ public class VehiculeRestController {
     // Afficher un véhicule par ID
     @GetMapping("/{id}")
     @Operation(summary = "Consulter un véhicule")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Véhicule trouvé"),
+
+            @ApiResponse(responseCode = "200", description = "Véhicule trouvé")
             @ApiResponse(responseCode = "404", description = "Véhicule introuvable")
-    })
     public ResponseEntity<VehiculeDTO> afficher(
             @Parameter(description = "Identifiant du véhicule")
             @PathVariable Long id) {
@@ -73,11 +72,10 @@ public class VehiculeRestController {
     // Modifier un véhicule
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un véhicule")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Véhicule modifié"),
-            @ApiResponse(responseCode = "400", description = "Valeur numérique invalide"),
+
+            @ApiResponse(responseCode = "200", description = "Véhicule modifié")
+            @ApiResponse(responseCode = "400", description = "Valeur numérique invalide")
             @ApiResponse(responseCode = "404", description = "Véhicule introuvable")
-    })
     public ResponseEntity<VehiculeDTO> modifier(
             @PathVariable Long id,
             @Valid @RequestBody VehiculeDTO vehiculeDTO) {
@@ -91,10 +89,10 @@ public class VehiculeRestController {
     // Supprimer un véhicule
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer un véhicule")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Véhicule supprimé"),
+
+            @ApiResponse(responseCode = "204", description = "Véhicule supprimé")
             @ApiResponse(responseCode = "404", description = "Véhicule introuvable")
-    })
+
     public ResponseEntity<Void> supprimer(
             @PathVariable Long id) {
 
@@ -102,6 +100,7 @@ public class VehiculeRestController {
 
         return ResponseEntity.noContent().build();
     }
+    //affecter une vehicule a une agence
     @PutMapping("/{idVehicule}/agence/{idAgence}")
     @Operation(
             summary = "Affecter un véhicule à une agence",
@@ -134,6 +133,7 @@ public class VehiculeRestController {
                         idVehicule, idAgence));
     }
 
+    // affecter un equipement a une vehicule
     @PutMapping("/{idVehicule}/equipement/{idEquipement}")
     @Operation(
             summary = "Affecter un équipement à un véhicule",
@@ -158,6 +158,7 @@ public class VehiculeRestController {
                     description = "Erreur interne du serveur"
             )
     })
+
     public ResponseEntity<VehiculeDTO> affecterEquipement(
             @PathVariable Long idVehicule,
             @PathVariable Long idEquipement) {
@@ -165,5 +166,31 @@ public class VehiculeRestController {
         return ResponseEntity.ok(
                 vehiculeService.affecterEquipementAVehicule(
                         idVehicule, idEquipement));
+    }
+
+
+    // Trouver un véhicule à partir de l'ID d'un contrat
+    @GetMapping("/contrat/{id}")
+    @Operation(
+            summary = "Afficher un Véhicule par Id contrat",
+            description = "Retourne les informations du véhicule associé au contrat correspondant à l'identifiant fourni."
+    )
+    @ApiResponse(responseCode = "200", description = "Véhicule trouvé avec succès")
+    @ApiResponse(responseCode = "404", description = "Contrat introuvable ou aucun véhicule associé")
+    public ResponseEntity<VehiculeDTO> findVehiculeByContrat(@PathVariable Long id) {
+
+        return ResponseEntity.ok(vehiculeService.findReservationVehiculeByIdContrat(id));
+    }
+
+    // Trouver un véhicule à partir de l'ID d'une maintenance
+    @GetMapping("/maintenance/{id}")
+    @Operation(
+            summary = "Afficher la liste des Véhicules par Id Maintenance",
+            description = "Retourne les informations du véhicule associé à la maintenance correspondant à l'identifiant fourni.")
+    @ApiResponse(responseCode = "200", description = "Véhicule trouvé avec succès")
+    @ApiResponse(responseCode = "404", description = "Maintenance introuvable ou aucun véhicule associé")
+    public ResponseEntity<VehiculeDTO> findVehiculeByMaintenance(@PathVariable Long id) {
+
+        return ResponseEntity.ok(vehiculeService.findVehiculeByIdMaintenance(id));
     }
 }

@@ -13,6 +13,6 @@ public interface IMaintenanceService {
 
     MaintenanceDTO  update(Long id, MaintenanceDTO  entite);
     MaintenanceDTO affecterMaintenanceAVehicule(Long idMaintenance, Long idVehicule);
-
+    List<MaintenanceDTO> findByIdVehicule(Long id);
     void deleteById(Long id);
 }

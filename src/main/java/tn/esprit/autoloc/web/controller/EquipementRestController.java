@@ -4,7 +4,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
@@ -33,10 +32,10 @@ public class EquipementRestController {
     // Ajouter un équipement
     @PostMapping
     @Operation(summary = "Créer un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Équipement créé"),
+
+            @ApiResponse(responseCode = "201", description = "Équipement créé")
             @ApiResponse(responseCode = "400", description = "Données invalides")
-    })
+
     public ResponseEntity<EquipementDTO> ajouter(
             @Valid @RequestBody EquipementDTO equipementDTO) {
 
@@ -59,10 +58,10 @@ public class EquipementRestController {
     // Afficher un équipement par ID
     @GetMapping("/{id}")
     @Operation(summary = "Consulter un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Équipement trouvé"),
+
+            @ApiResponse(responseCode = "200", description = "Équipement trouvé")
             @ApiResponse(responseCode = "404", description = "Équipement introuvable")
-    })
+
     public ResponseEntity<EquipementDTO> afficher(
             @Parameter(description = "Identifiant de l'équipement")
             @PathVariable Long id) {
@@ -73,11 +72,11 @@ public class EquipementRestController {
     // Modifier un équipement
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Équipement modifié"),
-            @ApiResponse(responseCode = "400", description = "Données invalides"),
+
+            @ApiResponse(responseCode = "200", description = "Équipement modifié")
+            @ApiResponse(responseCode = "400", description = "Données invalides")
             @ApiResponse(responseCode = "404", description = "Équipement introuvable")
-    })
+
     public ResponseEntity<EquipementDTO> modifier(
             @PathVariable Long id,
             @Valid @RequestBody EquipementDTO equipementDTO) {
@@ -91,10 +90,10 @@ public class EquipementRestController {
     // Supprimer un équipement
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Équipement supprimé"),
+
+            @ApiResponse(responseCode = "204", description = "Équipement supprimé")
             @ApiResponse(responseCode = "404", description = "Équipement introuvable")
-    })
+
     public ResponseEntity<Void> supprimer(
             @PathVariable Long id) {
 

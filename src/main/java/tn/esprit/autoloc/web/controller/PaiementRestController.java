@@ -4,7 +4,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.RequiredArgsConstructor;
@@ -20,10 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/paiements")
 @RequiredArgsConstructor
-@Tag(
-        name = "Paiements",
-        description = "Consultation des paiements associés aux contrats"
-)
+@Tag(name = "Paiements", description = "Consultation des paiements associés aux contrats")
 public class PaiementRestController {
 
     private final IPaiementService paiementService;
@@ -49,10 +45,10 @@ public class PaiementRestController {
             summary = "Consulter un paiement",
             description = "Recherche un paiement par son identifiant."
     )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Paiement trouvé"),
+
+            @ApiResponse(responseCode = "200", description = "Paiement trouvé")
             @ApiResponse(responseCode = "404", description = "Paiement introuvable")
-    })
+
     public ResponseEntity<PaiementDTO> afficher(
             @Parameter(description = "Identifiant du paiement")
             @PathVariable Long id) {

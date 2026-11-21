@@ -1,11 +1,8 @@
 package tn.esprit.autoloc.service;
-
 import java.util.HashSet;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.Equipement;
 import tn.esprit.autoloc.domain.Vehicule;
@@ -24,7 +21,7 @@ public class VehiculeServiceImpl implements IVehiculeService {
     private final IAgenceRepository agenceRepository;
     private final IEquipementRepository equipementRepository;
     private final IMapper vehiculeMapper;
-
+    private static final String ENTITY_NAME = "Maintenance";
     @Override
     public VehiculeDTO create(VehiculeDTO dto) {
 
@@ -53,7 +50,7 @@ public class VehiculeServiceImpl implements IVehiculeService {
     public VehiculeDTO findById(Long id) {
         Vehicule vehicule = vehiculeRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Vehicule", id));
+                        new ResourceNotFoundException(ENTITY_NAME, id));
 
         return vehiculeMapper.toDto(vehicule);
     }
@@ -70,7 +67,7 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
         Vehicule existant = vehiculeRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Vehicule", id));
+                        new ResourceNotFoundException(ENTITY_NAME, id));
 
         existant.setImmatriculation(dto.getImmatriculation());
         existant.setMarque(dto.getMarque());
@@ -90,7 +87,7 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
         Vehicule vehicule = vehiculeRepository.findById(idVehicule)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Vehicule", idVehicule));
+                        new ResourceNotFoundException(ENTITY_NAME, idVehicule));
 
         Agence agence = agenceRepository.findById(idAgence)
                 .orElseThrow(() ->
@@ -109,7 +106,7 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
         Vehicule vehicule = vehiculeRepository.findById(idVehicule)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Vehicule", idVehicule));
+                        new ResourceNotFoundException(ENTITY_NAME, idVehicule));
 
         Equipement equipement = equipementRepository.findById(idEquipement)
                 .orElseThrow(() ->
@@ -125,13 +122,40 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
         return vehiculeMapper.toDto(updated);
     }
-
+// Supprimer un vehicule
     @Override
     public void deleteById(Long id) {
         if (!vehiculeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Vehicule", id);
+            throw new ResourceNotFoundException(ENTITY_NAME, id);
         }
 
         vehiculeRepository.deleteById(id);
     }
+
+    // Afficher le vehicule à partir de l'idContrat
+    @Override
+    public VehiculeDTO findReservationVehiculeByIdContrat(Long id) {
+
+        Vehicule vehicule = vehiculeRepository.findByReservationsContratIdContrat(id);
+
+        if (vehicule == null) {
+            throw new ResourceNotFoundException(ENTITY_NAME, id);
+        }
+
+        return vehiculeMapper.toDto(vehicule);
+    }
+
+    //Afficher un vehicule a partir de l'idMaintenance
+    @Override
+    public VehiculeDTO findVehiculeByIdMaintenance(Long id) {
+
+        Vehicule vehicule = vehiculeRepository.findVehiculesByIdMaintenance(id);
+
+        if (vehicule == null) {
+            throw new ResourceNotFoundException(ENTITY_NAME, id);
+        }
+        return vehiculeMapper.toDto(vehicule);
+    }
+
+
 }

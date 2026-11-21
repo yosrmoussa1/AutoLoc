@@ -33,10 +33,10 @@ public class MaintenanceRestController {
     // Créer une maintenance
     @PostMapping
     @Operation(summary = "Créer une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Maintenance créée"),
+
+            @ApiResponse(responseCode = "201", description = "Maintenance créée")
             @ApiResponse(responseCode = "400", description = "Dates ou données invalides")
-    })
+
     public ResponseEntity<MaintenanceDTO> ajouter(
             @Valid @RequestBody MaintenanceDTO maintenanceDTO) {
 
@@ -60,10 +60,10 @@ public class MaintenanceRestController {
     // Afficher une maintenance par ID
     @GetMapping("/{id}")
     @Operation(summary = "Consulter une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Maintenance trouvée"),
+
+            @ApiResponse(responseCode = "200", description = "Maintenance trouvée")
             @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
-    })
+
     public ResponseEntity<MaintenanceDTO> afficher(
             @Parameter(description = "Identifiant de la maintenance")
             @PathVariable Long id) {
@@ -74,11 +74,11 @@ public class MaintenanceRestController {
     // Modifier une maintenance
     @PutMapping("/{id}")
     @Operation(summary = "Modifier une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Maintenance modifiée"),
-            @ApiResponse(responseCode = "400", description = "Dates ou données invalides"),
+
+            @ApiResponse(responseCode = "200", description = "Maintenance modifiée")
+            @ApiResponse(responseCode = "400", description = "Dates ou données invalides")
             @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
-    })
+
     public ResponseEntity<MaintenanceDTO> modifier(
             @PathVariable Long id,
             @Valid @RequestBody MaintenanceDTO maintenanceDTO) {
@@ -92,10 +92,10 @@ public class MaintenanceRestController {
     // Supprimer une maintenance
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Maintenance supprimée"),
+
+            @ApiResponse(responseCode = "204", description = "Maintenance supprimée")
             @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
-    })
+
     public ResponseEntity<Void> supprimer(
             @PathVariable Long id) {
 
@@ -137,5 +137,18 @@ public class MaintenanceRestController {
                         idMaintenance, idVehicule
                 )
         );
+    }
+
+    // Trouver les maintenances à partir de l'ID d'un véhicule
+    @GetMapping("/vehicule/{id}")
+    @Operation(
+            summary = " Afficher la liste des Maintenances par Id Véhicule",
+            description = "Retourne la liste des maintenances effectuées ou programmées pour le véhicule correspondant à l'identifiant fourni."
+    )
+    @ApiResponse(responseCode = "200", description = "Liste des maintenances récupérée avec succès")
+    @ApiResponse(responseCode = "404", description = "Véhicule introuvable")
+    public ResponseEntity<List<MaintenanceDTO>> findMaintenancesByVehicule(@PathVariable Long id) {
+
+        return ResponseEntity.ok(maintenanceService.findByIdVehicule(id));
     }
 }

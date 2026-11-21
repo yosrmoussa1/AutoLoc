@@ -18,6 +18,7 @@ public class ContratServiceImpl implements IContratService {
     private final IReservationRepository reservationRepository;
     private final IMapper contratMapper;
 
+    //ajouter un contrat
     @Override
     public ContratDTO create(ContratDTO dto) {
 
@@ -66,19 +67,13 @@ public class ContratServiceImpl implements IContratService {
     @Override
     public ContratDTO update(Long id, ContratDTO dto) {
 
-        Contrat existant = contratRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Contrat", id));
-
+        Contrat existant = contratRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contrat", id));
         existant.setDateSignature(dto.getDateSignature());
         existant.setMontantTotal(dto.getMontantTotal());
         existant.setValide(dto.getValide());
-
         // Modification de la réservation si un nouvel ID est fourni
         if (dto.getIdReservation() != null) {
-            Reservation reservation = reservationRepository.findById(dto.getIdReservation())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException("Reservation", dto.getIdReservation()));
+            Reservation reservation = reservationRepository.findById(dto.getIdReservation()).orElseThrow(() -> new ResourceNotFoundException("Reservation", dto.getIdReservation()));
 
             existant.setReservation(reservation);
         }
@@ -97,4 +92,12 @@ public class ContratServiceImpl implements IContratService {
 
         contratRepository.deleteById(id);
     }
+
+    // Afficher les contrats à partir de l'ID du véhicule
+    @Override
+    public List<ContratDTO> findContratByIdVehicule(Long id) {
+
+        return contratRepository.findByReservationVehiculeIdVehicule(id).stream().map(contratMapper::toDto).toList();
+    }
+
 }

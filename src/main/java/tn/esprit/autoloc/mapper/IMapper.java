@@ -7,6 +7,7 @@ import tn.esprit.autoloc.web.dto.*;
 
 @Mapper(componentModel = "spring")
 public interface IMapper {
+
     AgenceDTO toDto(Agence agence);
 
     @Mapping(target = "vehicules", ignore = true)
@@ -18,8 +19,7 @@ public interface IMapper {
     @Mapping(target = "reservations", ignore = true)
     Client toEntity(ClientDTO clientDTO);
 
-    @Mapping(target = "idReservation",
-            source = "reservation.idReservation")
+    @Mapping(target = "idReservation", source = "reservation.idReservation")
     ContratDTO toDto(Contrat contrat);
 
     @Mapping(target = "reservation", ignore = true)
@@ -64,6 +64,5 @@ public interface IMapper {
 
     @Mapping(target = "agence", ignore = true)
     @Mapping(target = "equipements", ignore = true)
-    @Mapping(target = "maintenances", ignore = true)
     Vehicule toEntity(VehiculeDTO vehiculeDTO);
 }

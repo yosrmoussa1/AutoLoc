@@ -1,5 +1,5 @@
 package tn.esprit.autoloc.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 

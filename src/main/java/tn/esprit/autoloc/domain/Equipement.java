@@ -19,5 +19,5 @@ public class Equipement {
     @Column (nullable = false, length = 20)
     private String libelle;
     @ManyToMany(mappedBy = "equipements", fetch = FetchType.LAZY)
-    private Set<Vehicule> vehicules= new HashSet<>();;
+    private Set<Vehicule> vehicules= new HashSet<>();
 }

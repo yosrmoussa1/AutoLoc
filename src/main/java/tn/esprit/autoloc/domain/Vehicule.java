@@ -35,9 +35,10 @@ public class Vehicule {
     private StatutVehicule statut;
     @ManyToOne(fetch = FetchType.LAZY)
     private Agence agence;
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
+    List<Reservation> reservations = new ArrayList<>();
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "vehicule_equipement")
     private Set<Equipement>  equipements=new HashSet<>();
-    @OneToMany(mappedBy="vehicule",cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
-    private List<Maintenance> maintenances=new ArrayList<>();
+
 }

@@ -4,7 +4,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
@@ -33,10 +32,10 @@ public class EmployeRestController {
     // Ajouter un employé
     @PostMapping
     @Operation(summary = "Créer un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Employé créé"),
+
+            @ApiResponse(responseCode = "201", description = "Employé créé")
             @ApiResponse(responseCode = "400", description = "Données invalides")
-    })
+
     public ResponseEntity<EmployeDTO> ajouter(
             @Valid @RequestBody EmployeDTO employeDTO) {
 
@@ -59,10 +58,10 @@ public class EmployeRestController {
     // Afficher un employé par ID
     @GetMapping("/{id}")
     @Operation(summary = "Consulter un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Employé trouvé"),
+
+            @ApiResponse(responseCode = "200", description = "Employé trouvé")
             @ApiResponse(responseCode = "404", description = "Employé introuvable")
-    })
+
     public ResponseEntity<EmployeDTO> afficher(
             @Parameter(description = "Identifiant de l'employé")
             @PathVariable Long id) {
@@ -73,11 +72,11 @@ public class EmployeRestController {
     // Modifier un employé
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Employé modifié"),
-            @ApiResponse(responseCode = "400", description = "Données invalides"),
+
+            @ApiResponse(responseCode = "200", description = "Employé modifié")
+            @ApiResponse(responseCode = "400", description = "Données invalides")
             @ApiResponse(responseCode = "404", description = "Employé introuvable")
-    })
+
     public ResponseEntity<EmployeDTO> modifier(
             @PathVariable Long id,
             @Valid @RequestBody EmployeDTO employeDTO) {
@@ -90,10 +89,10 @@ public class EmployeRestController {
     // Supprimer un employé
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Employé supprimé"),
+
+            @ApiResponse(responseCode = "204", description = "Employé supprimé")
             @ApiResponse(responseCode = "404", description = "Employé introuvable")
-    })
+
     public ResponseEntity<Void> supprimer(
             @PathVariable Long id) {
 

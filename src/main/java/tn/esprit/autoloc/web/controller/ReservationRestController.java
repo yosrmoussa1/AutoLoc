@@ -4,7 +4,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
@@ -22,10 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reservations")
 @RequiredArgsConstructor
-@Tag(
-        name = "Réservations",
-        description = "Gestion des réservations AutoLoc (créer, consulter, modifier et supprimer des réservations)"
-)
+@Tag(name = "Réservations", description = "Gestion des réservations AutoLoc (créer, consulter, modifier et supprimer des réservations)")
 public class ReservationRestController {
 
     private final IReservationService reservationService;
@@ -33,10 +29,10 @@ public class ReservationRestController {
     // Créer une réservation
     @PostMapping
     @Operation(summary = "Créer une réservation")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Réservation créée"),
+
+            @ApiResponse(responseCode = "201", description = "Réservation créée")
             @ApiResponse(responseCode = "400", description = "Dates ou données invalides")
-    })
+
     public ResponseEntity<ReservationDTO> ajouter(
             @Valid @RequestBody ReservationDTO reservationDTO) {
 
@@ -60,10 +56,10 @@ public class ReservationRestController {
     // Afficher une réservation par ID
     @GetMapping("/{id}")
     @Operation(summary = "Consulter une réservation")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Réservation trouvée"),
+
+            @ApiResponse(responseCode = "200", description = "Réservation trouvée")
             @ApiResponse(responseCode = "404", description = "Réservation introuvable")
-    })
+
     public ResponseEntity<ReservationDTO> afficher(
             @Parameter(description = "Identifiant de la réservation")
             @PathVariable Long id) {
@@ -74,33 +70,22 @@ public class ReservationRestController {
     // Modifier une réservation
     @PutMapping("/{id}")
     @Operation(summary = "Modifier une réservation")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Réservation modifiée"),
-            @ApiResponse(responseCode = "400", description = "Dates ou données invalides"),
+            @ApiResponse(responseCode = "200", description = "Réservation modifiée")
+            @ApiResponse(responseCode = "400", description = "Dates ou données invalides")
             @ApiResponse(responseCode = "404", description = "Réservation introuvable")
-    })
-    public ResponseEntity<ReservationDTO> modifier(
-            @PathVariable Long id,
-            @Valid @RequestBody ReservationDTO reservationDTO) {
-
-        ReservationDTO reservationModifiee =
-                reservationService.update(id, reservationDTO);
-
-        return ResponseEntity.ok(reservationModifiee);
+    public ResponseEntity<ReservationDTO> modifier(@PathVariable Long id, @Valid @RequestBody ReservationDTO reservationDTO) {
+        return ResponseEntity.ok(reservationService.update(id, reservationDTO));
     }
 
     // Supprimer une réservation
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer une réservation")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Réservation supprimée"),
+
+            @ApiResponse(responseCode = "204", description = "Réservation supprimée")
             @ApiResponse(responseCode = "404", description = "Réservation introuvable")
-    })
-    public ResponseEntity<Void> supprimer(
-            @PathVariable Long id) {
 
+    public ResponseEntity<Void> supprimer(@PathVariable Long id) {
         reservationService.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 }
